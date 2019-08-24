@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+from threading import Thread
+import os
+import sys
+import time
+
+helpStr = "USE: contrSSH <comand>\n   start - start the contrSSH\n   ft - filter list if targets\n   fl - filter list of logins\n   ct - clean targets\n   cl - clean logins\n"
+
+def start():
+	print("A")
+	Thread(target=os.system, args=('sudo /usr/bin/honeypot.py',)).start()
+	Thread(target=os.system, args=('sudo tail --follow=name /var/log/contrSSH/targets.txt | /usr/bin/hydracall.py > /var/log/contrSSH/hacked',)).start()
+	print("B")
+def fl():
+	f = open("/var/log/contrSSH/logins.log", "r")
+	a = set()
+	for i in f:
+		a.add(i)
+	f.close()
+	f = open("/var/log/contrSSH/logins.log", "w")
+	for i in a:
+		f.write(i[:-1])
+	f.close()
+def cl():
+	f = open("/var/log/contrSSH/logins.log", "r")
+	f.close()
+
+args = sys.argv[1:]
+for param in args:
+	if param == "start":
+		start()
+	#elif param == "ft":
+	#	ft()
+	elif param == "fl":
+		fl()
+	#elif param == "ct":
+	#	ct()
+	elif param == "cl":
+		cl()
+	else:
+		print(helpStr)
+while True:
+	time.sleep(1000)
+
+
