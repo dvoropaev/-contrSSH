@@ -19,7 +19,7 @@ def fl():
 	f.close()
 	f = open("/var/log/contrSSH/logins.log", "w")
 	for i in a:
-		f.write(i[:-1])
+		f.write(i)
 	f.close()
 def cl():
 	f = open("/var/log/contrSSH/logins.log", "r")
